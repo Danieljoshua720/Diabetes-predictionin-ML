@@ -1,162 +1,176 @@
-#🩺 Diabetes Prediction Using Machine Learning
-Overview
-This project builds a machine learning model to predict whether a patient is diabetic or not based on medical diagnostic features. It uses the Pima Indians Diabetes Dataset and applies classification algorithms to achieve high prediction accuracy.
+# 🩺 Diabetes Prediction Web App
 
-📁 Project Structure
-diabetes-prediction-ml/
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+![Flask](https://img.shields.io/badge/Flask-2.0+-green.svg)
+![Scikit-learn](https://img.shields.io/badge/Scikit--learn-1.0+-orange.svg)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+
+A machine learning web application that predicts whether a person is **Diabetic or Non-Diabetic** based on medical inputs, using **Logistic Regression** and served via a **Flask** web interface.
+
+---
+
+## 🌐 Live Demo
+
+> Enter patient details → Get instant diabetes prediction
+
+---
+
+## 📁 Project Structure
+```
+Diabetes-prediction/
 │
-├── data/
-│   └── diabetes.csv              # Dataset (Pima Indians Diabetes)
+├── Logistic_Regression.ipynb     # Model training, EDA & evaluation
+├── modelForPrediction.pkl        # Saved trained Logistic Regression model
+├── standardScalar.pkl            # Saved StandardScaler for input normalization
 │
-├── notebooks/
-│   └── diabetes_prediction.ipynb # EDA + Model Training notebook
+├── app.py                        # Flask backend – routes & prediction logic
+├── home.html                     # Home / landing page
+├── index.html                    # Patient input form
+├── single_prediction.html        # Prediction result page
 │
-├── src/
-│   ├── preprocess.py             # Data cleaning & feature engineering
-│   ├── train.py                  # Model training script
-│   ├── evaluate.py               # Model evaluation metrics
-│   └── predict.py                # Prediction on new data
-│
-├── models/
-│   └── diabetes_model.pkl        # Saved trained model
-│
-├── requirements.txt
-├── README.md
-└── app.py                        # (Optional) Flask/Streamlit web app
+└── README.md
+```
 
-📊 Dataset
-Source: UCI ML Repository – Pima Indians Diabetes Database
-FeatureDescriptionPregnanciesNumber of times pregnantGlucosePlasma glucose concentrationBloodPressureDiastolic blood pressure (mm Hg)SkinThicknessTriceps skin fold thickness (mm)Insulin2-Hour serum insulin (mu U/ml)BMIBody mass index (weight/height²)DiabetesPedigreeFunctionDiabetes pedigree functionAgeAge in yearsOutcomeTarget variable: 1 = Diabetic, 0 = Non-Diabetic
-Dataset Size: 768 samples, 8 features, 1 target variable
+---
 
-⚙️ Installation
-Prerequisites
+## ⚙️ Installation & Setup
 
-Python 3.8+
-pip
+### 1. Clone the Repository
+```bash
+git clone https://github.com/Danieljoshua720/Diabetes-prediction.git
+cd Diabetes-prediction
+```
 
-Steps
-bash# 1. Clone the repository
-git clone https://github.com/yourusername/diabetes-prediction-ml.git
-cd diabetes-prediction-ml
-
-# 2. Create a virtual environment (recommended)
+### 2. Create a Virtual Environment
+```bash
 python -m venv venv
 source venv/bin/activate        # On Windows: venv\Scripts\activate
-
-# 3. Install dependencies
-pip install -r requirements.txt
 ```
 
-### requirements.txt
+### 3. Install Dependencies
+```bash
+pip install flask scikit-learn numpy pandas joblib
 ```
-numpy==1.24.0
-pandas==2.0.0
-scikit-learn==1.3.0
-matplotlib==3.7.0
-seaborn==0.12.2
-joblib==1.3.0
-flask==2.3.0           # optional (for web app)
-streamlit==1.25.0      # optional (for UI)
 
-🚀 Usage
-1. Train the Model
-bashpython src/train.py
-2. Evaluate the Model
-bashpython src/evaluate.py
-3. Predict on New Data
-bashpython src/predict.py --input "[6, 148, 72, 35, 0, 33.6, 0.627, 50]"
-4. Launch the Web App (Optional)
-bash# Flask
+---
+
+## 🚀 Run the App
+```bash
 python app.py
+```
 
-# OR Streamlit
-streamlit run app.py
+Then open your browser and go to:
+```
+http://127.0.0.1:5000
 ```
 
 ---
 
-## 🔬 Machine Learning Pipeline
+## 🔬 Machine Learning Model
 
-### 1. Data Preprocessing
-- Handle missing/zero values (Glucose, BMI, BloodPressure, etc.)
-- Feature scaling using `StandardScaler`
-- Train-test split (80/20)
-
-### 2. Models Used
-
-| Model | Accuracy |
-|---|---|
-| Logistic Regression | ~77% |
-| Random Forest | ~82% |
-| Support Vector Machine (SVM) | ~79% |
-| K-Nearest Neighbors (KNN) | ~75% |
-| XGBoost | **~84%** ✅ |
-
-### 3. Best Model
-**XGBoost Classifier** with hyperparameter tuning via `GridSearchCV`.
-
-### 4. Evaluation Metrics
-- Accuracy
-- Precision, Recall, F1-Score
-- ROC-AUC Curve
-- Confusion Matrix
+| Detail | Info |
+|--------|------|
+| Algorithm | Logistic Regression |
+| Dataset | Pima Indians Diabetes Dataset |
+| Preprocessing | StandardScaler |
+| Saved Model | `modelForPrediction.pkl` |
+| Saved Scaler | `standardScalar.pkl` |
 
 ---
 
-## 📈 Results
+## 🌐 App Flow
 ```
-Best Model: XGBoost
-Accuracy:   84.2%
-Precision:  82.1%
-Recall:     79.6%
-F1-Score:   80.8%
-ROC-AUC:    0.89
-
-🧪 Example Prediction
-pythonfrom src.predict import predict_diabetes
-
-patient_data = {
-    "Pregnancies": 6,
-    "Glucose": 148,
-    "BloodPressure": 72,
-    "SkinThickness": 35,
-    "Insulin": 0,
-    "BMI": 33.6,
-    "DiabetesPedigreeFunction": 0.627,
-    "Age": 50
-}
-
-result = predict_diabetes(patient_data)
-print(result)  # Output: "Diabetic" or "Non-Diabetic"
+🏠 home.html
+     ↓
+📋 index.html        ← User enters medical details
+     ↓
+⚙️  app.py           ← Flask loads model & scaler, runs prediction
+     ↓
+✅ single_prediction.html  ← Shows: Diabetic / Non-Diabetic
 ```
 
 ---
 
-## 🌐 Web App (Streamlit)
+## 📊 Input Features
 
-A simple interactive UI where users can input patient features and get a real-time prediction.
+| Feature | Description |
+|---------|-------------|
+| Pregnancies | Number of times pregnant |
+| Glucose | Plasma glucose concentration |
+| BloodPressure | Diastolic blood pressure (mm Hg) |
+| SkinThickness | Triceps skin fold thickness (mm) |
+| Insulin | 2-Hour serum insulin (mu U/ml) |
+| BMI | Body mass index |
+| DiabetesPedigreeFunction | Genetic diabetes risk score |
+| Age | Age in years |
+
+---
+
+## 📄 Key Files Explained
+
+| File | Purpose |
+|------|---------|
+| `Logistic_Regression.ipynb` | Data cleaning, EDA, model training, saving `.pkl` files |
+| `app.py` | Flask app – handles routing, loads model, returns prediction |
+| `modelForPrediction.pkl` | Serialized Logistic Regression model |
+| `standardScalar.pkl` | Fitted scaler to normalize user input before prediction |
+| `index.html` | HTML form to collect patient data |
+| `single_prediction.html` | Displays the final prediction result |
+
+---
+
+## 📸 Screenshots
+
+> *(Add screenshots of your home page, input form, and result page here)*
 ```
-Input Features → [Model] → Prediction (Diabetic / Non-Diabetic) + Probability
+home.html          index.html         single_prediction.html
+[Home Page]  →→→  [Input Form]  →→→  [Result: Diabetic ✅]
+```
 
-📌 Key Learnings
+---
 
-Handling medical datasets with zero-value anomalies
-Feature importance analysis using Random Forest & XGBoost
-Class imbalance handling using SMOTE
-Model serialization with joblib
+## 🛠️ Tech Stack
 
+- **Backend:** Python, Flask
+- **ML:** Scikit-learn, Logistic Regression
+- **Frontend:** HTML, CSS
+- **Model Serialization:** Joblib / Pickle
 
-🤝 Contributing
+---
 
-Fork the repository
-Create a new branch: git checkout -b feature/your-feature
-Commit your changes: git commit -m "Add feature"
-Push to the branch: git push origin feature/your-feature
-Open a Pull Request
+## 🤝 Contributing
 
+Contributions are welcome! Here's how:
 
-📄 License
-This project is licensed under the MIT License — see the LICENSE file for details.
+1. Fork the repository
+2. Create a new branch
+```bash
+git checkout -b feature/your-feature-name
+```
+3. Commit your changes
+```bash
+git commit -m "Add: your feature description"
+```
+4. Push to GitHub
+```bash
+git push origin feature/your-feature-name
+```
+5. Open a **Pull Request**
 
+---
 
+## 📄 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+## 👨‍💻 Author
+
+**Daniel Joshua**
+🔗 [GitHub](https://github.com/Danieljoshua720)
+
+---
+
+> ⚠️ **Disclaimer:** This application is built for **educational purposes only**.
+> It is **not** a substitute for professional medical diagnosis or advice.
