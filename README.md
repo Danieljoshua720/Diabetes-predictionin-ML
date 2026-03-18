@@ -1,4 +1,4 @@
-🩺 Diabetes Prediction Using Machine Learning
+#🩺 Diabetes Prediction Using Machine Learning
 Overview
 This project builds a machine learning model to predict whether a patient is diabetic or not based on medical diagnostic features. It uses the Pima Indians Diabetes Dataset and applies classification algorithms to achieve high prediction accuracy.
 
